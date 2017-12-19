@@ -5,16 +5,25 @@ class BookingsController < ApplicationController
 	end
 
 	def search
+		# we probably don't need this
 		search = params[:search]
 		if search == 'why'
 			redirect_to booking_path('why')
-		end		
+		end	
 	end
 
 	def show
 		if params[:id] == 'why'
-			render json: why
-		end
+			render(
+				status: 200,
+				json: why
+			)
+		else
+			render(
+				status: 404,
+				json: { error: 'Booking not found' }
+			)
+		end	
 	end
 
 	def why
