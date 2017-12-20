@@ -3,25 +3,9 @@ import React from 'react';
 class BookingSearch extends React.Component {
 	state = {
 		searchValue: '',
-		searchResult: '',
 		searchStatus: '',
+		searchResult: '',
 	};
-
-	updateSearchStatus = (response) => {
-	  this.setState({
-			searchStatus: response.status,
-		});
-
-		return response;
-	}
-
-	search = (query) => {
-	  return fetch(`bookings/${query}`, {
-	    accept: 'application/json',
-	  }).then(this.updateSearchStatus)
-	    .then(response => response.json())
-	    .then(result => this.setState({ searchResult: result }));
-	}	
 
 	updateSearchValue = (e) => {
 		const value = e.target.value;
@@ -31,29 +15,28 @@ class BookingSearch extends React.Component {
 		});
 	}
 
-	searchBookings = () => {
-		const searchValue = this.state.searchValue;
-
-		if (searchValue) {
-			this.search(searchValue);
-		} else {
-			window.alert("Please enter a value!");
-		}
-	}
-
+	searchBookings = (query) => {
+	  return fetch(`bookings/${query}`, {
+	    accept: 'application/json',
+	  }).then(response => {
+	    	this.setState({ searchStatus: response.status });
+	    	return response.json();
+	    })
+	    .then(result => this.setState({ searchResult: result }));
+	}	
 
 	render() {
 		const {
-			searchResult,
+			searchValue,
 			searchStatus,
+			searchResult,
 		} = this.state;
 
-		let searchResultDOM = null;
-
+		let bookingResult = null;
 		if (searchStatus === 200) {
-		  searchResultDOM = <p>{searchResult.booking_number}</p>;
+		  bookingResult = <p>{searchResult.booking_number}</p>;
 		} else if (searchStatus === 404) {
-			searchResultDOM = <p>ERROR</p>;
+			bookingResult = <p>No bookings found. Please try again.</p>;
 		}
 
 		return (
@@ -65,12 +48,15 @@ class BookingSearch extends React.Component {
 						value={this.state.searchValue}
 						onChange={this.updateSearchValue}
 					/>
-					<button onClick={this.searchBookings}>
+					<button 
+					  onClick={() => this.searchBookings(searchValue)}
+					  disabled={!searchValue}
+					>
 				    Search
 				  </button>
 				</div>
 				<div>
-					{searchResultDOM}
+					{bookingResult}
 				</div>
 			</div>
 		);
