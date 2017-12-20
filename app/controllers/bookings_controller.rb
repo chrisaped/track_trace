@@ -4,19 +4,11 @@ class BookingsController < ApplicationController
 
 	end
 
-	def search
-		# we probably don't need this
-		search = params[:search]
-		if search == 'why'
-			redirect_to booking_path('why')
-		end	
-	end
-
 	def show
 		if params[:id] == 'why'
 			render(
 				status: 200,
-				json: why
+				json: transform_response(why)
 			)
 		else
 			render(
@@ -57,4 +49,24 @@ class BookingsController < ApplicationController
 		  ]
 		}		
 	end
+
+	def transform_response(hash)
+		# to add updates to containers
+		containers = hash[:containers].sort_by { |container| container["number"] }
+		updates = hash[:updates].sort_by { |update| update["container_number"] }
+
+		containers.each do |container|
+			updates.each do |update|
+				if container["number"] == update["container_number"]
+					if !container["updates"]
+						container["updates"] = []
+					end
+					container["updates"] << update
+				end
+			end
+		end
+
+		hash
+	end
+
 end
