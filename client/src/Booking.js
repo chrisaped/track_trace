@@ -1,6 +1,7 @@
 function parse(result) {
+	
 	return (
-		result
+		<p>Booking Number</p>
 	);
 }
 

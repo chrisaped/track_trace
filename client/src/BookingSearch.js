@@ -5,6 +5,7 @@ class BookingSearch extends React.Component {
 		searchValue: '',
 		searchStatus: '',
 		searchResult: '',
+		showContainerUpdates: true,
 	};
 
 	updateSearchValue = (e) => {
@@ -25,7 +26,17 @@ class BookingSearch extends React.Component {
 	    .then(data => this.setState({ searchResult: data }));
 	}
 
+	toggleContainerUpdates = () => {
+		const { showContainerUpdates } = this.state;
+
+		this.setState({
+			showContainerUpdates: !showContainerUpdates,
+		});
+	}
+
 	parseBooking = (result) => {
+		const { showContainerUpdates } = this.state;
+
 		if (result && result.containers) {
 		  return (
 		  	<div>
@@ -41,18 +52,21 @@ class BookingSearch extends React.Component {
 			      	if (container.updates) {
                 container.updates.map((update, ui) => 
 				      		containerUpdates =
-				      		  <div>
-				      		  	<p>Update: {ui + 1}</p>
-				      		    <p>Container Number: {update.container_number}</p>
-				      		    <p>Arrival: {update.arrival}</p>
-				      		    <p>Delivery On: {update.delivery_on}</p>
-				      		    <p>Steamship Line: {update.steamship_line}</p>
-				      		    <p>Origin: {update.origin}</p>
-				      		    <p>Destination: {update.destination}</p>
-				      		    <p>Vessel: {update.vessel}</p>
-				      		    <p>Voyage: {update.voyage}</p>
-				      		    <p>Vessel ETA: {update.vessel_eta}</p>
-				      		  </div>
+				      			<div>
+				      			  <a href="#" onClick={this.toggleContainerUpdates}>Hide updates</a>
+					      		  <div hidden={!showContainerUpdates}>
+					      		  	<p>Update: {ui + 1}</p>
+					      		    <p>Container Number: {update.container_number}</p>
+					      		    <p>Arrival: {update.arrival}</p>
+					      		    <p>Delivery On: {update.delivery_on}</p>
+					      		    <p>Steamship Line: {update.steamship_line}</p>
+					      		    <p>Origin: {update.origin}</p>
+					      		    <p>Destination: {update.destination}</p>
+					      		    <p>Vessel: {update.vessel}</p>
+					      		    <p>Voyage: {update.voyage}</p>
+					      		    <p>Vessel ETA: {update.vessel_eta}</p>
+					      		  </div>
+				      			</div>
 				      	);
 			      	}
 
