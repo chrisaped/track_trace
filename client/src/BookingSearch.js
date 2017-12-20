@@ -1,11 +1,11 @@
 import React from 'react';
+import BookingDetails from './BookingDetails';
 
 class BookingSearch extends React.Component {
 	state = {
 		searchValue: '',
 		searchStatus: '',
 		searchResult: '',
-		showContainerUpdates: true,
 	};
 
 	updateSearchValue = (e) => {
@@ -26,70 +26,6 @@ class BookingSearch extends React.Component {
 	    .then(data => this.setState({ searchResult: data }));
 	}
 
-	toggleContainerUpdates = () => {
-		const { showContainerUpdates } = this.state;
-
-		this.setState({
-			showContainerUpdates: !showContainerUpdates,
-		});
-	}
-
-	parseBooking = (result) => {
-		const { showContainerUpdates } = this.state;
-
-		if (result && result.containers) {
-		  return (
-		  	<div>
-			  	<div>
-					  <p>Booking Number: {result.booking_number}</p>
-					  <p>Steamship Line: {result.steamship_line}</p>
-					  <p>Origin: {result.origin}</p>
-					  <p>Destination:: {result.destination}</p>
-					</div>
-					<div>
-			      {result.containers.map((container, ci) => {
-			      	let containerUpdates = null;
-			      	if (container.updates) {
-                container.updates.map((update, ui) => 
-				      		containerUpdates =
-				      			<div>
-				      			  <a href="#" onClick={this.toggleContainerUpdates}>Hide updates</a>
-					      		  <div hidden={!showContainerUpdates}>
-					      		  	<p>Update: {ui + 1}</p>
-					      		    <p>Container Number: {update.container_number}</p>
-					      		    <p>Arrival: {update.arrival}</p>
-					      		    <p>Delivery On: {update.delivery_on}</p>
-					      		    <p>Steamship Line: {update.steamship_line}</p>
-					      		    <p>Origin: {update.origin}</p>
-					      		    <p>Destination: {update.destination}</p>
-					      		    <p>Vessel: {update.vessel}</p>
-					      		    <p>Voyage: {update.voyage}</p>
-					      		    <p>Vessel ETA: {update.vessel_eta}</p>
-					      		  </div>
-				      			</div>
-				      	);
-			      	}
-
-
-			      	return (
-				      	<div key={ci}>
-				      		<p>Container {ci + 1}</p>
-				          <p>Number: {container.number}</p>
-				          <p>Size: {container.size}</p>
-				          <p>Type: {container.type}</p>
-				          <p>Last Status: {container.last_status}</p>
-				          <p>Location: {container.location}</p>
-				          <p>Last Status At: {container.last_status_at}</p>
-				          {containerUpdates}
-				        </div>
-				      );
-			      })}					
-			    </div>
-			  </div>
-		  );
-		}
-	}
-
 	render() {
 		const {
 			searchValue,
@@ -99,7 +35,7 @@ class BookingSearch extends React.Component {
 
 		let bookingResult = null;
 		if (searchStatus === 200) {
-		  bookingResult = this.parseBooking(searchResult);
+		  bookingResult = <BookingDetails searchResult={searchResult} />;
 		} else if (searchStatus === 404) {
 			bookingResult = <p>No bookings found. Please try again.</p>;
 		}
@@ -110,7 +46,7 @@ class BookingSearch extends React.Component {
 					<input
 						type='text'
 						placeholder='Enter a booking number'
-						value={this.state.searchValue}
+						value={searchValue}
 						onChange={this.updateSearchValue}
 					/>
 					<button 
@@ -126,7 +62,6 @@ class BookingSearch extends React.Component {
 			</div>
 		);
 	}
-
 }
 
 export default BookingSearch;
