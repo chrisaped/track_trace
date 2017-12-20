@@ -4,27 +4,22 @@ class BookingSearch extends React.Component {
 	state = {
 		searchValue: '',
 		searchResult: '',
-		status: '',
+		searchStatus: '',
 	};
 
-	// rename this
-	checkStatus = (response) => {
+	updateSearchStatus = (response) => {
 	  this.setState({
-			status: response.status,
+			searchStatus: response.status,
 		});
 
 		return response;
 	}
 
-	parseJSON = (response) => {
-	  return response.json();
-	}	
-
 	search = (query) => {
 	  return fetch(`bookings/${query}`, {
 	    accept: 'application/json',
-	  }).then(this.checkStatus)
-	    .then(this.parseJSON)
+	  }).then(this.updateSearchStatus)
+	    .then(response => response.json())
 	    .then(result => this.setState({ searchResult: result }));
 	}	
 
@@ -50,17 +45,14 @@ class BookingSearch extends React.Component {
 	render() {
 		const {
 			searchResult,
-			status,
+			searchStatus,
 		} = this.state;
-
-		console.log('FUCKER', searchResult);
-		console.log("STATUS", status);
 
 		let searchResultDOM = null;
 
-		if (status === 200) {
+		if (searchStatus === 200) {
 		  searchResultDOM = <p>{searchResult.booking_number}</p>;
-		} else if (status === 404) {
+		} else if (searchStatus === 404) {
 			searchResultDOM = <p>ERROR</p>;
 		}
 
