@@ -36,27 +36,21 @@ class BookingDetails extends React.Component {
 			      {searchResult.containers.map((container, ci) => {
 			      	let containerUpdates = null;
 			      	if (container.updates) {
-	              container.updates.map((update, ui) => 
-				      		containerUpdates =
-				      			<div>
-											<button 
-											  onClick={this.toggleContainerUpdates}
-											>
-										    Show/Hide
-										  </button>
-					      		  <div hidden={!showContainerUpdates}>
-					      		  	<p>Update: {ui + 1}</p>
-					      		    <p>Container Number: {update.container_number}</p>
-					      		    <p>Arrival: {update.arrival}</p>
-					      		    <p>Delivery On: {update.delivery_on}</p>
-					      		    <p>Steamship Line: {update.steamship_line}</p>
-					      		    <p>Origin: {update.origin}</p>
-					      		    <p>Destination: {update.destination}</p>
-					      		    <p>Vessel: {update.vessel}</p>
-					      		    <p>Voyage: {update.voyage}</p>
-					      		    <p>Vessel ETA: {update.vessel_eta}</p>
-					      		  </div>
-				      			</div>
+	              containerUpdates = container.updates.map((update, ui) =>
+			      			<div key={ui}>
+				      		  <div hidden={!showContainerUpdates}>
+				      		  	<p>Update: {ui + 1}</p>
+				      		    <p>Container Number: {update.container_number}</p>
+				      		    <p>Arrival: {update.arrival}</p>
+				      		    <p>Delivery On: {update.delivery_on}</p>
+				      		    <p>Steamship Line: {update.steamship_line}</p>
+				      		    <p>Origin: {update.origin}</p>
+				      		    <p>Destination: {update.destination}</p>
+				      		    <p>Vessel: {update.vessel}</p>
+				      		    <p>Voyage: {update.voyage}</p>
+				      		    <p>Vessel ETA: {update.vessel_eta}</p>
+				      		  </div>
+			      			</div>
 				      	);
 			      	}
 
@@ -69,7 +63,15 @@ class BookingDetails extends React.Component {
 				          <p>Last Status: {container.last_status}</p>
 				          <p>Location: {container.location}</p>
 				          <p>Last Status At: {container.last_status_at}</p>
-				          {containerUpdates}
+									<button
+									  onClick={this.toggleContainerUpdates}
+									  hidden={!container.updates}
+									>
+								    Show/Hide
+								  </button>
+								  <div>
+				            {containerUpdates}
+				          </div>
 				        </div>
 				      );
 			      })}
