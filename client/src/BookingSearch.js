@@ -17,7 +17,12 @@ class BookingSearch extends React.Component {
 	}
 
 	searchBookings = (query) => {
-	  return fetch(`bookings/${query}`, {
+		let url = `bookings/${query}`;
+		if (this.props.location.pathname !== "/") {
+			url = `${query}`;
+		}
+
+	  return fetch(url, {
 	    accept: 'application/json',
 	  }).then(response => {
 	    	this.setState({ searchStatus: response.status });
@@ -33,6 +38,10 @@ class BookingSearch extends React.Component {
 			searchResult,
 		} = this.state;
 
+		if (!searchResult && this.props.match && this.props.match.params.id) {
+			this.searchBookings(this.props.match.params.id);
+		}
+
 		let bookingResult = null;
 		if (searchStatus === 200) {
 		  bookingResult = <BookingDetails searchResult={searchResult} />;
@@ -42,7 +51,7 @@ class BookingSearch extends React.Component {
 
 		return (
 			<div>
-				<div id='booking-search'>
+				<div id='booking-search' hidden={this.props.location.pathname !== "/"}>
 					<input
 						type='text'
 						placeholder='Enter a booking number'
@@ -55,7 +64,7 @@ class BookingSearch extends React.Component {
 					>
 				    Search
 				  </button>
-				</div>
+				</div>	
 				<div>
 					{bookingResult}
 				</div>
