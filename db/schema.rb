@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171221214607) do
+ActiveRecord::Schema.define(version: 20171221222504) do
 
-  create_table "search_histories", force: :cascade do |t|
+  create_table "searches", force: :cascade do |t|
     t.string "booking_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
