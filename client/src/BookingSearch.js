@@ -38,20 +38,22 @@ class BookingSearch extends React.Component {
 			searchResult,
 		} = this.state;
 
+		const location = this.props.location.pathname;
+
 		if (!searchResult && this.props.match && this.props.match.params.id) {
 			this.searchBookings(this.props.match.params.id);
 		}
 
 		let bookingResult = null;
 		if (searchStatus === 200) {
-		  bookingResult = <BookingDetails searchResult={searchResult} />;
+		  bookingResult = <BookingDetails searchResult={searchResult} searchValue={searchValue} location={location} />;
 		} else if (searchStatus === 404) {
 			bookingResult = <p>No bookings found. Please try again.</p>;
 		}
 
 		return (
 			<div>
-				<div id='booking-search' hidden={this.props.location.pathname !== "/"}>
+				<div id='booking-search' hidden={location !== "/"}>
 					<input
 						type='text'
 						placeholder='Enter a booking number'

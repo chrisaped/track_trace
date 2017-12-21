@@ -15,7 +15,13 @@ class BookingDetails extends React.Component {
 
 	render() {
 		const { showContainerUpdates } = this.state;
-		const { searchResult } = this.props;
+		const { 
+			searchResult,
+			searchValue,
+			location,
+		} = this.props;
+
+		const linkUrl = "bookings/" + searchValue;
 
 		if (searchResult && searchResult.containers) {
 		  return (
@@ -67,6 +73,9 @@ class BookingDetails extends React.Component {
 				        </div>
 				      );
 			      })}
+			    </div>
+			    <div>
+			    	<p hidden={location !== "/"}>Link: <a href={linkUrl}>{linkUrl}</a></p>
 			    </div>
 			  </div>
 		  );
