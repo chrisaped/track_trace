@@ -1,5 +1,6 @@
 import React from 'react';
 import BookingDetails from './BookingDetails';
+import SearchHistory from './SearchHistory';
 
 class BookingSearch extends React.Component {
 	state = {
@@ -53,6 +54,9 @@ class BookingSearch extends React.Component {
 
 		return (
 			<div>
+				<div hidden={location !== "/"}>
+			    <SearchHistory />
+				</div>
 				<div id='booking-search' hidden={location !== "/"}>
 					<input
 						type='text'

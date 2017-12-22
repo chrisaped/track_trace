@@ -35,7 +35,7 @@ class BookingDetails extends React.Component {
 		if (searchResult && searchResult.containers) {
 		  return (
 		  	<div>
-		  		<div>
+		  		<div hidden={location !== "/"}>
 						<button
 						  onClick={this.saveSearch}
 						>
