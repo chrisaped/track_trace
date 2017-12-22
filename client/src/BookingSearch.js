@@ -16,11 +16,21 @@ class BookingSearch extends React.Component {
 		});
 	}
 
+	saveSearch = (bookingNumber) => {
+	  const url = 'search/?search[booking_number]=' + bookingNumber;
+	  return fetch(url, {
+	    method: 'post',
+	    body: JSON.stringify(bookingNumber),
+	  }).then(response => { return response.json(); })
+	}
+
 	searchBookings = (query) => {
 		let url = `bookings/${query}`;
 		if (this.props.location.pathname !== "/") {
 			url = `${query}`;
 		}
+
+		this.saveSearch(query);
 
 	  return fetch(url, {
 	    accept: 'application/json',

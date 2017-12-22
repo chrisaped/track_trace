@@ -1,9 +1,5 @@
 class BookingsController < ApplicationController
 
-	def index
-
-	end
-
 	def show
 		if params[:id] == 'why'
 			render(
@@ -14,7 +10,7 @@ class BookingsController < ApplicationController
 			render(
 				status: 200,
 				json: transform_response(how)
-			)			
+			)
 		else
 			render(
 				status: 404,

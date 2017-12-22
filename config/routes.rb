@@ -3,5 +3,7 @@ Rails.application.routes.draw do
   root 'bookings#index'
 
   get '/bookings/:id', to: 'bookings#show', as: 'booking'
-  get '/search', to: 'bookings#search', as: 'search'
+
+  post '/search', to: 'searches#create', as: 'search'
+
 end
