@@ -13,6 +13,15 @@ class BookingDetails extends React.Component {
 		});
 	}
 
+	saveSearch = () => {
+    const { searchValue } = this.props;
+	  const url = 'search/?search[booking_number]=' + searchValue;
+	  return fetch(url, {
+	    method: 'post',
+	    body: JSON.stringify(searchValue),
+	  }).then(response => { return response.json(); })
+	}	
+
 	render() {
 		const { showContainerUpdates } = this.state;
 		const { 
@@ -26,6 +35,13 @@ class BookingDetails extends React.Component {
 		if (searchResult && searchResult.containers) {
 		  return (
 		  	<div>
+		  		<div>
+						<button
+						  onClick={this.saveSearch}
+						>
+					    Save
+					  </button>
+		  		</div>
 			  	<div>
 					  <p>Booking Number: {searchResult.booking_number}</p>
 					  <p>Steamship Line: {searchResult.steamship_line}</p>
