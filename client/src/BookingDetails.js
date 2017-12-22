@@ -37,12 +37,13 @@ class BookingDetails extends React.Component {
 		  	<div>
 		  		<div hidden={location !== "/"}>
 						<button
+							className="ui green button"
 						  onClick={this.saveSearch}
 						>
 					    Save
 					  </button>
 		  		</div>
-			  	<div>
+			  	<div className="ui raised segment">
 					  <p>Booking Number: {searchResult.booking_number}</p>
 					  <p>Steamship Line: {searchResult.steamship_line}</p>
 					  <p>Origin: {searchResult.origin}</p>
@@ -51,11 +52,20 @@ class BookingDetails extends React.Component {
 					<div>
 			      {searchResult.containers.map((container, ci) => {
 			      	let containerUpdates = null;
+			      	let updatesButton = null;
 			      	if (container.updates) {
+								updatesButton = (
+									<button
+										className="ui grey button"
+									  onClick={this.toggleContainerUpdates}
+									>
+								    Show/Hide Updates
+								  </button>
+								);
 	              containerUpdates = container.updates.map((update, ui) =>
 			      			<div key={ui}>
-				      		  <div hidden={!showContainerUpdates}>
-				      		  	<p>Update: {ui + 1}</p>
+				      		  <div className="ui raised segment" hidden={!showContainerUpdates}>
+				      		  	<h3>Update: {ui + 1}</h3>
 				      		    <p>Container Number: {update.container_number}</p>
 				      		    <p>Arrival: {update.arrival}</p>
 				      		    <p>Delivery On: {update.delivery_on}</p>
@@ -71,20 +81,15 @@ class BookingDetails extends React.Component {
 			      	}
 
 			      	return (
-				      	<div key={ci}>
-				      		<p>Container {ci + 1}</p>
+				      	<div className="ui raised segment" key={ci}>
+				      		<h2>Container {ci + 1}</h2>
 				          <p>Number: {container.number}</p>
 				          <p>Size: {container.size}</p>
 				          <p>Type: {container.type}</p>
 				          <p>Last Status: {container.last_status}</p>
 				          <p>Location: {container.location}</p>
 				          <p>Last Status At: {container.last_status_at}</p>
-									<button
-									  onClick={this.toggleContainerUpdates}
-									  hidden={!container.updates}
-									>
-								    Show/Hide
-								  </button>
+				          {updatesButton}
 								  <div>
 				            {containerUpdates}
 				          </div>
@@ -92,8 +97,8 @@ class BookingDetails extends React.Component {
 				      );
 			      })}
 			    </div>
-			    <div>
-			    	<p hidden={location !== "/"}>Link: <a href={linkUrl}>{linkUrl}</a></p>
+			    <div className="ui raised segment" hidden={location !== "/"}>
+			    	<h2>Link: <a href={linkUrl}>{linkUrl}</a></h2>
 			    </div>
 			  </div>
 		  );

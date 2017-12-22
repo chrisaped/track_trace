@@ -47,24 +47,34 @@ class SearchHistory extends React.Component {
 		let searchHistoryMenu = null;
 		let searchHistoryButton = null;
 		if (!noSearches) {
-			searchHistoryButton = <button onClick={this.toggleSearchHistoryMenu}>Search History</button>
+			searchHistoryButton = (
+			  <button 
+			    className="ui basic button" 
+			    onClick={this.toggleSearchHistoryMenu}
+			    data-element="menu"
+			    data-type="collection"
+			  >
+			    Search History
+			  </button>
+			);
 		}
 
 		if (!noSearches && isOpen) {
 			searchHistoryMenu = (
 				<div>
+				  <div className="ui list">
+				    { searches.map((search, i) => {
+				    	return(
+				    	  <div className="item" key={i}><a href={'/bookings/' + search.booking_number}>{search.booking_number}</a></div>
+				    	);
+				    })}
+				  </div>
 					<button
+					  className="negative mini ui button"
 						onClick={this.deleteSearchHistory}
 					>
 						Delete Search History
 					</button>
-				  <ul>
-				    { searches.map((search, i) => {
-				    	return(
-				    	  <li key={i}><a href={'/bookings/' + search.booking_number}>{search.booking_number}</a></li>
-				    	);
-				    })}
-				  </ul>
 				</div>
 			);
 		}

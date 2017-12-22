@@ -51,29 +51,39 @@ class BookingSearch extends React.Component {
 		} else if (searchStatus === 404) {
 			bookingResult = <p>No bookings found. Please try again.</p>;
 		}
+		let searchHistory = null;
+		let bookingSearch = null;
+		if (location === "/") {
+			searchHistory = <SearchHistory />;
+			bookingSearch = (
+				<div>
+				  <h1>Booking Search</h1>
+				  <div className="ui fluid action input">
+						<input
+							type='text'
+							placeholder='Enter a booking number'
+							value={searchValue}
+							onChange={this.updateSearchValue}
+						/>
+						<button 
+						  className="ui primary button"
+						  onClick={() => this.searchBookings(searchValue)}
+						  disabled={!searchValue}
+						>
+					    Search
+					  </button>
+				  </div>
+				</div>
+			);
+		}
 
 		return (
 			<div>
-				<div className="ui right aligned container" hidden={location !== "/"}>
-			    <SearchHistory />
+				<div className="ui left aligned container">
+			    {searchHistory}
 				</div>
-				<div className="ui center aligned container" hidden={location !== "/"}>
-				  <h1>Booking Search</h1>
-					<input
-						type='text'
-						placeholder='Enter a booking number'
-						value={searchValue}
-						onChange={this.updateSearchValue}
-					/>
-					<button 
-					  className="ui primary button"
-					  onClick={() => this.searchBookings(searchValue)}
-					  disabled={!searchValue}
-					>
-				    Search
-				  </button>
-				</div>	
-				<div>
+				<div className="ui center aligned container">
+				  {bookingSearch}
 					{bookingResult}
 				</div>
 			</div>
