@@ -61,7 +61,7 @@ class SearchHistory extends React.Component {
 				  <ul>
 				    { searches.map((search, i) => {
 				    	return(
-				    	  <li key={i}>{search.booking_number}</li>
+				    	  <li key={i}><a href={'/bookings/' + search.booking_number}>{search.booking_number}</a></li>
 				    	);
 				    })}
 				  </ul>
