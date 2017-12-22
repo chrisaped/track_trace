@@ -16,6 +16,14 @@ class SearchesController < ApplicationController
 		)
   end
 
+  def destroy_all
+  	@searches = Search.destroy_all
+  	render(
+  		status: 200,
+  		json: @searches
+  	)
+  end
+
   private
 
   def search_params

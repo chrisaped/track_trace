@@ -24,16 +24,35 @@ class SearchHistory extends React.Component {
 		});
 	}
 
+	deleteSearchHistory = () => {
+		const url = 'searches';
+	  return fetch(url, {
+	    method: 'delete',
+	  }).then(response => {
+		    return response.json();
+	    })
+	    .then(data => this.setState({
+	       searches: null,
+	       isOpen: false,
+	     }));
+	}
+
 	render() {
 		const {
       searches,
       isOpen,
 		} = this.state;
 
+		const noSearches = !searches || searches.length === 0;
 		let searchHistoryMenu = null;
-		if (searches && isOpen) {
+		if (!noSearches && isOpen) {
 			searchHistoryMenu = (
 				<div>
+					<button
+						onClick={this.deleteSearchHistory}
+					>
+						Delete Search History
+					</button>
 				  <ul>
 				    { searches.map((search, i) => {
 				    	return(

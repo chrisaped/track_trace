@@ -7,4 +7,6 @@ Rails.application.routes.draw do
 
   get '/searches', to: 'searches#index', as: 'searches'
 
+  delete '/searches', to: 'searches#destroy_all', as: 'destroy_searches'
+
 end
