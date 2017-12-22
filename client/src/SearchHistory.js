@@ -45,6 +45,11 @@ class SearchHistory extends React.Component {
 
 		const noSearches = !searches || searches.length === 0;
 		let searchHistoryMenu = null;
+		let searchHistoryButton = null;
+		if (!noSearches) {
+			searchHistoryButton = <button onClick={this.toggleSearchHistoryMenu}>Search History</button>
+		}
+
 		if (!noSearches && isOpen) {
 			searchHistoryMenu = (
 				<div>
@@ -66,13 +71,7 @@ class SearchHistory extends React.Component {
 
 		return (
 			<div>
-				<div>
-					<button 
-					  onClick={this.toggleSearchHistoryMenu}
-					>
-				    Search History
-				  </button>
-				</div>
+				{searchHistoryButton}
 				{searchHistoryMenu}
 			</div>
 		);
