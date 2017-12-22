@@ -54,10 +54,11 @@ class BookingSearch extends React.Component {
 
 		return (
 			<div>
-				<div hidden={location !== "/"}>
+				<div className="ui right aligned container" hidden={location !== "/"}>
 			    <SearchHistory />
 				</div>
-				<div id='booking-search' hidden={location !== "/"}>
+				<div className="ui center aligned container" hidden={location !== "/"}>
+				  <h1>Booking Search</h1>
 					<input
 						type='text'
 						placeholder='Enter a booking number'
@@ -65,6 +66,7 @@ class BookingSearch extends React.Component {
 						onChange={this.updateSearchValue}
 					/>
 					<button 
+					  className="ui primary button"
 					  onClick={() => this.searchBookings(searchValue)}
 					  disabled={!searchValue}
 					>
