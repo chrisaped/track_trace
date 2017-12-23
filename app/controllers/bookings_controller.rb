@@ -1,12 +1,12 @@
 class BookingsController < ApplicationController
 
 	def show
-		if params[:id] == 'why'
+		if params[:id] == "TXG790195100"
 			render(
 				status: 200,
 				json: transform_response(why)
 			)
-		elsif params[:id] == 'how'
+		elsif params[:id] == "TXG790214500"
 			render(
 				status: 200,
 				json: transform_response(how)
